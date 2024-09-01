@@ -104,4 +104,25 @@ class AVLTree {
 
         return unBalanceNode;
     }
+
+    insert(targetRootNode, data) {
+        if (targetRootNode == null) {
+            targetRootNode = new BinaryTree(data);
+        }
+
+        if (this.root == null) {
+            this.root = targetRootNode;
+        } else if (targetRootNode.getData() == data) {
+            return targetRootNode;
+        } else if (targetRootNode.getData() > data) {
+            this.insert(targetRootNode.getLeftSubTree(), data);
+        } else {
+            targetRootNode.setRightSubTree(this.insert(targetRootNode.getRightSubTree(), data));
+        }
+
+        this.updateHeight(targetRootNode);
+        targetRootNode = this.rotation(targetRootNode, data);
+
+        return targetRootNode;
+    }
 }
